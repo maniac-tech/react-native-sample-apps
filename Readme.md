@@ -12,4 +12,5 @@ You will find an array of examples of working React native expo apps.
 
 ## Concepts covered
 1. React Redux -> `react-redux`
-2. Redux Persist -> `redux-persist`
+2. React Redux (using toolkit) -> `react-redux-toolkit`
+3. Redux Persist -> `redux-persist`
