@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { NativeBaseProvider, Box } from "native-base";
+import { NativeBaseProvider, Button } from "native-base";
 
 export default function App() {
   return (
@@ -15,12 +15,8 @@ export default function App() {
       <View style={styles.container}>
         <Text>Counter: 0</Text>
         <View style={styles.floatingView}>
-          <TouchableOpacity style={styles.floatingButton}>
-            <Text>+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.floatingButton}>
-            <Text>-</Text>
-          </TouchableOpacity>
+          <Button>+</Button>
+          <Button>-</Button>
         </View>
         <TextInput keyboardType="numeric" placeholder="change amount" />
       </View>
