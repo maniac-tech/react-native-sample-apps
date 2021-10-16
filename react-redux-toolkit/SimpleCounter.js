@@ -1,31 +1,40 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "native-base";
 
-import { incrementAction, decrementAction, changeByAmount } from "./actions";
+import {
+  getCounterValue,
+  decrement,
+  increment,
+  setCounter,
+} from "./slices/counterSlice";
 
-const SimpleCounter = (props) => {
-  const increment = () => {
-    console.log("increment called");
-    props.dispatch(incrementAction());
+const SimpleCounter = () => {
+  const dispatch = useDispatch();
+  const counter = useSelector(getCounterValue);
+
+  const incrementClickHandler = () => {
+    const newCounter = counter + 1 || 1;
+    dispatch(increment(newCounter));
   };
 
-  const decrement = () => {
-    props.dispatch(decrementAction());
+  const decrementClickHandler = () => {
+    const newCounter = counter - 1;
+    dispatch(decrement(newCounter));
   };
 
   const handleInputChange = (event) => {
-    props.dispatch(changeByAmount(event.nativeEvent.text));
+    const newCounter = event.nativeEvent.text;
+    dispatch(setCounter(newCounter));
   };
 
   return (
     <View style={styles.container}>
-      <Text>Counter:</Text>
-      <Text>{props.amount}</Text>
+      <Text>Counter: {counter}</Text>
       <View style={styles.floatingView}>
-        <Button onPress={increment}>+</Button>
-        <Button onPress={decrement}>-</Button>
+        <Button onPress={incrementClickHandler}>+</Button>
+        <Button onPress={decrementClickHandler}>-</Button>
       </View>
       <TextInput
         onSubmitEditing={handleInputChange}
@@ -45,8 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state, props) => {
-  return { amount: state.counter.amount };
-};
-
-export default connect(mapStateToProps)(SimpleCounter);
+export default SimpleCounter;
