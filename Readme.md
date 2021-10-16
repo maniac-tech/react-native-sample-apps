@@ -1,7 +1,7 @@
 # React native Sample Apps
 
 ## About
-You will find an array of examples of working examples of React native expo apps.
+You will find an array of examples of working React native expo apps.
 
 ## How to start?
 - Pull the repo locally
