@@ -5,6 +5,30 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setData, getRandomUserEmail } from "./slices/dataSlice";
 
+const fetchRandomName = () => {
+  function thunkFunction(dispatch) {
+    fetch("https://randomuser.me/api/")
+      .then((response) => {
+        // console.log("response:", response);
+        return response;
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseJson) => {
+        // console.log(responseJson.results[0].email);
+        dispatch(setData(responseJson.results[0].email));
+      });
+  }
+  thunkFunction.interceptInOffline = true;
+  thunkFunction.meta = {
+    retry: true,
+    name: "fetchRandomName",
+    args: [],
+  };
+  return thunkFunction;
+};
+
 const RandomNameGenerator = () => {
   const dispatch = useDispatch();
   const randomNameData = useSelector(getRandomUserEmail);
@@ -25,27 +49,6 @@ const RandomNameGenerator = () => {
   //   dispatch(setData(response[0].email));
   //   return response.name;
   // });
-  const fetchRandomName = () => {
-    function thunkFunction(dispatch) {
-      fetch("https://randomuser.me/api/")
-        .then((response) => {
-          // console.log("response:", response);
-          return response;
-        })
-        .then((response) => {
-          return response.json();
-        })
-        .then((responseJson) => {
-          // console.log(responseJson.results[0].email);
-          dispatch(setData(responseJson.results[0].email));
-        });
-    }
-    thunkFunction.interceptInOffline = true;
-    thunkFunction.meta = {
-      retry: true,
-    };
-    return thunkFunction;
-  };
 
   const buttonClickHandler = () => {
     console.log("Generate Random Data button clicked!!");
@@ -66,4 +69,5 @@ const RandomNameGenerator = () => {
   );
 };
 
+export { fetchRandomName };
 export default RandomNameGenerator;
