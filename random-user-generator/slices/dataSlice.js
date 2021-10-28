@@ -11,11 +11,13 @@ console.log("offlineActionType:", offlineActionType);
 const dataSlice = createSlice({
   name: "dataSlice",
   initialState: {
-    data: null,
+    data: [],
   },
   reducers: {
     setData: (state, { payload }) => {
-      state.data = payload;
+      const existingData = state.data;
+      existingData.push({ id: 2, title: payload});
+      state.data = existingData;
     },
   },
   extraReducers: {
