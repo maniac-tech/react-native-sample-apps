@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Provider } from "react-redux";
 import { StyleSheet } from "react-native";
 import { store, persistor } from "./store";
@@ -12,22 +12,39 @@ import {
   NativeBaseProvider,
   Stack,
   StatusBar,
+  Switch,
 } from "native-base";
 
 import ConnectivityStatus from "./ConnectivityStatus";
 import RandomNameGenerator from "./RandomNameGenerator";
+
 import("./ReactotronConfig").then(() => console.log("Reactotron Configured"));
 
 export default function App() {
+  const DEFAULT_ONLINE_ON_LOAD = true;
+  const [switcherCheckState, setSwitcherCheckState] = useState(
+    DEFAULT_ONLINE_ON_LOAD
+  );
+
   const deleteLocalStorage = () => {
     persistor.purge();
+  };
+
+  const switchToggleHandler = (oldState) => {
+    setSwitcherCheckState(oldState);
   };
 
   return (
     <Provider store={store}>
       <StatusBar style="dark" />
       <PersistGate loading={null} persistor={persistor}>
-        <ReduxNetworkProvider pingServerUrl="https://google.com">
+        <ReduxNetworkProvider
+          pingServerUrl={
+            switcherCheckState
+              ? "https://google.com"
+              : "https://gsfdsgadgdsafgoogle.com"
+          }
+        >
           <NativeBaseProvider>
             <StatusBar />
             <Center>
@@ -35,6 +52,10 @@ export default function App() {
                 <Heading m={5}>Random Name Generator!</Heading>
                 <ConnectivityStatus />
               </Stack>
+              <Switch
+                onToggle={switchToggleHandler}
+                isChecked={switcherCheckState}
+              />
             </Center>
             <RandomNameGenerator />
             <Button onPress={deleteLocalStorage}>Delete Local storage</Button>
