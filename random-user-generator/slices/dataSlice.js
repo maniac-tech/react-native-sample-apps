@@ -33,7 +33,7 @@ function fetchRandomName() {
       interceptInOffline: true,
       meta: {
         ...(actionCreatorFn.meta || {}),
-        name,
+        name: "fetchRandomName"+Math.random(),
         retry: true,
         args: [],
       },

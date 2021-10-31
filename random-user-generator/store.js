@@ -3,7 +3,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { AsyncStorage } from "react-native";
 import { createTransform, persistStore, persistReducer } from "redux-persist";
-import { reducer as network } from "react-native-offline";
+import {
+  reducer as network,
+  createReducer as createNetworkReducer,
+} from "react-native-offline";
 import { createNetworkMiddleware } from "react-native-offline";
 import Reactotron from "./ReactotronConfig";
 
@@ -61,10 +64,22 @@ const networkMiddleware = createNetworkMiddleware({
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  transforms: [networkTransform]
+  transforms: [networkTransform],
 };
 
-const rootReducer = combineReducers({ dataReducer, network });
+const comparisonFn = (action, actionQueue) => {
+  console.log("action:", action);
+  console.log("actionQueue:", actionQueue);
+
+  if (typeof action === "function") {
+    console.log("meta name:", action.meta.name);
+  }
+};
+
+const rootReducer = combineReducers({
+  dataReducer,
+  network: createNetworkReducer(comparisonFn),
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
