@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Provider } from "react-redux";
-import { StyleSheet } from "react-native";
+import { Provider, useSelector } from "react-redux";
+import { StyleSheet, Text } from "react-native";
 import { store, persistor } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
 import { ReduxNetworkProvider } from "react-native-offline";
@@ -10,11 +10,13 @@ import {
   Center,
   Heading,
   NativeBaseProvider,
+  Row,
   Stack,
   StatusBar,
   Switch,
 } from "native-base";
 
+import { getNetworkActionQueue } from "./slices/dataSlice";
 import ConnectivityStatus from "./ConnectivityStatus";
 import RandomNameGenerator from "./RandomNameGenerator";
 
@@ -52,10 +54,15 @@ export default function App() {
                 <Heading m={5}>Random Name Generator!</Heading>
                 <ConnectivityStatus />
               </Stack>
-              <Switch
-                onToggle={switchToggleHandler}
-                isChecked={switcherCheckState}
-              />
+              <Row>
+                <Center>
+                  <Text>Mock No internet by turning off the switcher:</Text>
+                </Center>
+                <Switch
+                  onToggle={switchToggleHandler}
+                  isChecked={switcherCheckState}
+                />
+              </Row>
             </Center>
             <RandomNameGenerator />
             <Button onPress={deleteLocalStorage}>Delete Local storage</Button>
