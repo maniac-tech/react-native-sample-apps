@@ -3,31 +3,7 @@ import { View, StyleSheet, StatusBar } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Center, FlatList, Text } from "native-base";
 
-import { setData, getRandomUserEmail } from "./slices/dataSlice";
-
-const fetchRandomName = () => {
-  function thunkFunction(dispatch) {
-    fetch("https://randomuser.me/api/")
-      .then((response) => {
-        // console.log("response:", response);
-        return response;
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((responseJson) => {
-        // console.log(responseJson.results[0].email);
-        dispatch(setData(responseJson.results[0].email));
-      });
-  }
-  thunkFunction.interceptInOffline = true;
-  thunkFunction.meta = {
-    retry: true,
-    name: "fetchRandomName",
-    args: [],
-  };
-  return thunkFunction;
-};
+import { fetchRandomName, getRandomUserEmail } from "./slices/dataSlice";
 
 const RandomNameGenerator = () => {
   const dispatch = useDispatch();
@@ -74,5 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { fetchRandomName };
 export default RandomNameGenerator;

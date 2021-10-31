@@ -7,11 +7,11 @@ import { reducer as network } from "react-native-offline";
 import { createNetworkMiddleware } from "react-native-offline";
 import Reactotron from "./ReactotronConfig";
 
-import { fetchRandomName } from "./RandomNameGenerator";
+import { fetchRandomNameFunction } from "./slices/dataSlice";
 import dataReducer from "./slices/dataSlice";
 
 const actions = {
-  fetchRandomName,
+  fetchRandomNameFunction,
 };
 
 // Transform how the persistor reads the network state
