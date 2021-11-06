@@ -3,6 +3,7 @@ import { View, StyleSheet, StatusBar } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Center, FlatList, Text } from "native-base";
 
+import ActionQueueContainer from "./ActionQueueContainer";
 import { fetchRandomName, getRandomUserEmail } from "./slices/dataSlice";
 
 const RandomNameGenerator = () => {
@@ -29,6 +30,7 @@ const RandomNameGenerator = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
+      <ActionQueueContainer />
       <Button onPress={buttonClickHandler}>Generate Random User data</Button>
     </Center>
   );

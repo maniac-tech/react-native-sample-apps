@@ -81,3 +81,4 @@ export default dataSlice.reducer;
 export { fetchRandomName };
 export const getRandomUserEmail = (state) => state.dataReducer.data;
 export const getConnectivityStatus = (state) => state.network.isConnected;
+export const getNetworkActionQueue = (state) => state.network.actionQueue;
